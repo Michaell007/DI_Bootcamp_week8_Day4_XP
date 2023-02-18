@@ -1,10 +1,15 @@
-<?php 
+<?php
+   $host = "localhost";
+   $port = "5432";
+   $dbname = "public";
+   $user = "postgres";
+   $password = "postgres";
 
-conn = psycopg2.connect(
-    host="localhost",
-    database="nom_de_la_base_de_donnees",
-    user="nom_utilisateur",
-    password="mot_de_passe")
-
-print("Opened database successfully")
+   $db = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+   
+   if(!$db) {
+      echo "Error : you can accss the database\n";
+   } else {
+      echo "Opened database successfully\n";
+   }
 ?>
