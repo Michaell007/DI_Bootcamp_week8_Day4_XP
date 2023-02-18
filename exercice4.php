@@ -1,25 +1,56 @@
 <?php
-// Créez une connexion de base de données au serveur PostgreSQL.
-$host = "localhost";
-$port = "5432";
-$dbname = "mydb";
-$user = "myuser";
-$password = "mypassword";
+    
+    $dbhost = 'localhost';
+    $dbport = '5432';
+    $dbname = 'php_postgre';
+    $dbuser = 'postgres';
+    $dbpassword = 12136270;
 
-$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+    $dbconn = pg_connect("host=$dbhost port=$dbport dbname=$dbname user=$dbuser password=$dbpassword");
 
-if (!$conn) {
-  echo "Failed to connect to the database";
-}
+    if (!$dbconn) {
+        echo "Could not connect to database.\n";
+    exit;
+    }else{
+        echo "Connected to database.\n";
+    }
 
-// Créez une requête SQL.
-$result = pg_query($conn, "SELECT * FROM COMPANY");
+    $query = "SELECT * FROM COMPANY";
 
-// Exécuter la requête pour récupérer la table
-while ($row = pg_fetch_assoc($result)) {
-  echo "ID: " . $row['ID'] . " | NAME: " . $row['NAME'] . " | AGE: " . $row['AGE'] . " | ADDRESS: " . $row['ADDRESS'] . " | SALARY: " . $row['SALARY'] . "<br>";
-}
+    $result = pg_query($dbconn, $query);
 
-// Fermez la connexion à la base de données.
-pg_close($conn);
+    if (!$result) {
+        echo "Error fetching data\n";
+    exit;
+    }else{
+        echo "Successfully fetched data from database.\n";
+        
+    }
+    echo "<table>";
+    echo "<tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Salary</th>
+        </tr>";
+
+    while($row = pg_fetch_assoc($result)){
+
+        $id = $row['id'];
+        $name = $row['name'];
+        $age = $row['age'];
+        $address = $row['address'];
+        $salary = $row['salary'];
+        echo "<tr>
+                <td>$id</td>
+                <td>$name</td>
+                <td>$age</td>
+                <td>$address</td>
+                <td>$salary</td>
+            </tr>";
+    }
+    echo "</table>";
+
+    pg_close($dbconn);
 ?>
