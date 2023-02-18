@@ -1,36 +1,36 @@
 <?php
-// Créez une connexion de base de données au serveur PostgreSQL
-$dbname = "your_database_name";
-$host = "localhost";
-$port = "5432";
-$user = "your_username";
-$password = "your_password";
+  
+    $dbhost = 'localhost';
+    $dbport = '5432';
+    $dbname = 'php_postgre';
+    $dbuser = 'postgres';
+    $dbpassword = 12136270;
 
-$conn = pg_connect("dbname=$dbname host=$host port=$port user=$user password=$password");
+    $dbconn = pg_connect("host=$dbhost port=$dbport dbname=$dbname user=$dbuser password=$dbpassword");
 
-if (!$conn) {
-  echo "Failed to connect to the database";
-  exit;
-}
+    if (!$dbconn) {
+        echo "Could not connect to database.\n";
+    exit;
+    }else{
+        echo "Connected to database.\n";
+    }
 
-// Créez une requête SQL
-$sql = "CREATE TABLE COMPANY (
-    ID      INT     PRIMARY KEY     NOT NULL,
-    NAME    TEXT    NOT NULL,
-    AGE     INT     NOT NULL,
-    ADDRESS CHAR(50),
-    SALARY  REAL
-)";
+    $query = "CREATE TABLE COMPANY (
+                ID INT PRIMARY KEY NOT NULL,
+                NAME TEXT NOT NULL,
+                AGE INT NOT NULL,
+                ADDRESS CHAR(50),
+                SALARY REAL
+            )";
 
-// Exécuter une requête pour créer la table
-$result = pg_query($conn, $sql);
+    $result = pg_query($dbconn, $query);
 
-if ($result) {
-  echo "Table created successfully";
-} else {
-  echo "Error creating table: " . pg_last_error($conn);
-}
+    if (!$result) {
+        echo "Error creating table.\n";
+    exit;
+    }else{
+        echo "Created table successfully.\n";
+    }
 
-// Fermez la connexion à la base de données.
-pg_close($conn);
+    pg_close($dbconn);
 ?>
