@@ -10,6 +10,6 @@
    if(!$db) {
       echo "Error : you can accss the database\n";
    } else {
-      echo "Opened database successfully\n";
+      echo "Opened database successfully\n"; 
    }
 ?>
